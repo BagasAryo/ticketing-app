@@ -21,7 +21,7 @@ class EventSeeder extends Seeder
                 'tanggal' => '2024-08-15 19:00:00',
                 'lokasi' => 'Stadion Utama',
                 'kategori_id' => 1,
-                'gambar' => 'konser_rock.jpg',
+                'gambar' => 'events/konser_rock.jpg',
             ],
             [
                 'user_id' => 1,
@@ -30,7 +30,7 @@ class EventSeeder extends Seeder
                 'tanggal' => '2024-09-10 10:00:00',
                 'lokasi' => 'Galeri Seni Kota',
                 'kategori_id' => 2,
-                'gambar' => 'pameran_seni.jpg',
+                'gambar' => 'events/pameran_seni.jpg',
             ],
             [
                 'user_id' => 1,
@@ -39,7 +39,7 @@ class EventSeeder extends Seeder
                 'tanggal' => '2024-10-05 12:00:00',
                 'lokasi' => 'Taman Kota',
                 'kategori_id' => 3,
-                'gambar' => 'festival_makanan.jpg',
+                'gambar' => 'events/festival_makanan.jpg',
             ],
         ];
         foreach ($events as $event) {
