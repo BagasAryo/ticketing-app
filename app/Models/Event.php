@@ -11,14 +11,16 @@ class Event extends Model
         'deskripsi',
         'tanggal',
         'lokasi',
-        'gambar'
+        'gambar',
+        'user_id',
+        'kategori_id'
     ];
 
     protected $casts = [
         'tanggal' => 'datetime',
     ];
 
-    public function tikets()
+    public function tickets()
     {
         return $this->hasMany(Tiket::class);
     }
