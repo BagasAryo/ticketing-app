@@ -56,14 +56,11 @@ class EventController extends Controller
         return redirect()->route('admin.events.index')->with('success', 'Event berhasil ditambahkan.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $event = Event::findOrFail($id);
         $categories = Kategori::all();
-        $tickets = $event->tikets;
+        $tickets = $event->tickets;
 
         return view('admin.events.show', compact('event', 'categories', 'tickets'));
     }
