@@ -11,6 +11,10 @@ class Order extends Model
         'total_harga'
     ];
 
+    protected $casts = [
+        'ordered_at' => 'datetime',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
