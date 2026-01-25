@@ -24,7 +24,7 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order->load('detailOrders.ticket');
+        $order->load('detailOrders.tiket');
         return view('orders.show', compact('order'));
     }
 
@@ -34,7 +34,7 @@ class OrderController extends Controller
         $data = $request->validate([
             'event_id' => 'required|exists:events,id',
             'items' => 'required|array',
-            'items.*.ticket_id' => 'required|exists:tickets,id',
+            'items.*.ticket_id' => 'required|exists:tikets,id',
             'items.*.jumlah' => 'required|integer|min:1',
         ]);
 
@@ -46,7 +46,7 @@ class OrderController extends Controller
                 $total = 0;
                 // validate stock and calculate total
                 foreach ($data['items'] as $it) {
-                    $t = Tiket::lockForUpdate()->findOrFail($it['tiket_id']);
+                    $t = Tiket::lockForUpdate()->findOrFail($it['ticket_id']);
                     if ($t->stok < $it['jumlah']) {
                         throw new \Exception("Stok tidak cukup untuk tipe: {$t->tipe}");
                     }
@@ -56,12 +56,12 @@ class OrderController extends Controller
                 $order = Order::create([
                     'user_id' => $user->id,
                     'event_id' => $data['event_id'],
-                    'order_date' => Carbon::now(),
+                    'ordered_at' => Carbon::now(),
                     'total_harga' => $total,
                 ]);
 
                 foreach ($data['items'] as $it) {
-                    $t = Tiket::findOrFail($it['tiket_id']);
+                    $t = Tiket::findOrFail($it['ticket_id']);
                     $subtotal = ($t->harga ?? 0) * $it['jumlah'];
                     DetailOrder::create([
                         'order_id' => $order->id,
@@ -80,7 +80,7 @@ class OrderController extends Controller
 
             session()->flash('success', 'Order berhasil dibuat.');
             return response()->json(['ok' => true, 'order_id' => $order->id, 'redirect' => route('orders.index')]);
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
             return response()->json(['ok' => false, 'message' => $e->getMessage()], 422);
         }
     }

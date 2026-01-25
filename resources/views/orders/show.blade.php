@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between mb-6">
       <h1 class="text-2xl font-bold">Detail Pemesanan</h1>
       <div class="text-sm text-gray-500">Order #{{ $order->id }} •
-        {{ $order->order_date->translatedFormat('d F Y, H:i') }}
+        {{ $order->ordered_at->translatedFormat('d F Y, H:i') }}
       </div>
     </div>
 
@@ -11,7 +11,7 @@
       <div class="lg:flex ">
         <div class="lg:w-1/3 p-4">
           <img
-            src="{{ $order->event?->gambar ? asset($order->event->gambar) : 'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp' }}"
+            src="{{ $order->event?->gambar ? asset('images/events/' . $order->event->gambar) : 'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp' }}"
             alt="{{ $order->event?->judul ?? 'Event' }}" class="w-full object-cover mb-2" />
           <h2 class="font-semibold text-lg">{{ $order->event?->judul ?? 'Event' }}</h2>
           <p class="text-sm text-gray-500 mt-1">{{ $order->event?->lokasi ?? '' }}</p>
@@ -38,7 +38,6 @@
           <div class="flex justify-between items-center">
             <span class="font-bold">Total</span>
             <span class="font-bold text-lg">Rp {{ number_format($order->total_harga, 0, ',', '.') }}</span>
-
           </div>
         </div>
       </div>
